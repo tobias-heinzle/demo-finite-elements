@@ -7,14 +7,6 @@ from .assembly_local_quad import build_local_matrices_quad
 
 
 def find_global_indices(triangulation, k):
-    # local_indices = [(i, j) for j in range(3) for i in range(3)]
-    # global_indices = []
-    # for i, j in local_indices:
-    #     loc2glob_i = triangulation['triangles'][k][i]
-    #     loc2glob_j = triangulation['triangles'][k][j]
-    #     global_indices.append((loc2glob_i, loc2glob_j))
-
-    # return global_indices
     return [(triangulation['triangles'][k][i],
              triangulation['triangles'][k][j])
             for j in range(3) for i in range(3)]

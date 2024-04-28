@@ -38,7 +38,6 @@ assert all(
     mask == mask_M), "Nonzero block of stiffness and mass matrix do not match!"
 
 print("A.shape:", A.shape, "\nM.shape:", M.shape)
-print("cond(A):", np.linalg.cond(A),"\ncond(M):",  np.linalg.cond(M))
 
 assert N_VALUES <= A.shape[0], "# Eigenvalues of A < N_VALUES, choose finer mesh!"
 

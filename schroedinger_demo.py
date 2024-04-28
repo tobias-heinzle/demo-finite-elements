@@ -17,9 +17,8 @@ np.set_printoptions(precision=2)
 MODE = "experiment"
 PLOT_PATH = "plots/schroedinger"
 
-N_VALUES = 16
 N_BOUNDARY = 40
-TRI_AREA = round(1./20., 5)
+TRI_AREA = round(1./70., 5)
 
 
 LAMBDA = -5.0
@@ -85,7 +84,6 @@ assert all(
     mask == mask_M), "Nonzero block of stiffness and mass matrix do not match!"
 
 print("A.shape:", A.shape, "\nM.shape:", M.shape)
-print("cond(A):", np.linalg.cond(A), "\ncond(M):",  np.linalg.cond(M))
 
 U_0 = project_initial_condition(mesh["vertices"], lambda x: u_0_func(x))
 U_0_interior = U_0[~mask]

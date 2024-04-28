@@ -12,12 +12,22 @@ import numpy as np
 def construct_mesh(mode: str, tri_area: float,  n_boundary: int = 20) -> tuple[dict, dict]:
 
     if mode == "circle":
+        center = 0.5
         radius = 0.5
         vertices = np.stack(
             [
-                radius + np.cos(np.linspace(0, 2*np.pi,
+                center + np.cos(np.linspace(0, 2*np.pi,
                                 n_boundary + 1)[:-1])*radius,
-                radius + np.sin(np.linspace(0, 2*np.pi,
+                center + np.sin(np.linspace(0, 2*np.pi,
+                                n_boundary + 1)[:-1])*radius
+            ], -1)
+    if mode == "large_circle":
+        radius = 5
+        vertices = np.stack(
+            [
+                np.cos(np.linspace(0, 2*np.pi,
+                                n_boundary + 1)[:-1])*radius,
+                np.sin(np.linspace(0, 2*np.pi,
                                 n_boundary + 1)[:-1])*radius
             ], -1)
     elif mode == "rectangle":
