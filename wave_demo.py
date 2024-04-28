@@ -29,7 +29,7 @@ x_range = (-5, 5)
 y_range = (-5, 5)
 
 
-def u_0_func(x): return 2*np.cos(np.sqrt(x[0]**2 + x[1]**2)*np.pi/2) if (x[0]**2 + x[1]**2) <= 1 else 0
+def u_0_func(x): return 2*np.sin(np.sqrt(x[0]**2 + x[1]**2)*2*np.pi) if (x[0]**2 + x[1]**2) <= 2 else 0
 def v_0_func(x): return 0
 
 
@@ -69,6 +69,9 @@ U_0 = project_initial_condition(mesh["vertices"], u_0_func)
 V_0 = project_initial_condition(mesh["vertices"], v_0_func)
 u = U_0[~mask]
 v = V_0[~mask]
+kinetic = [(v.T @ M @ v)/2 ]
+potential = [(u.T @ A @ u)/2]
+energy = [(v.T @ M @ v)/2 + (u.T @ A @ u)/2]
 
 
 print("u.shape:", u.shape)
@@ -82,7 +85,21 @@ for k, t in enumerate(np.arange(0, T, STEP)):
 
     u, v = time_step(u, v)
 
+    kinetic += [(v.T @ M @ v)/2 ]
+    potential += [(u.T @ A @ u)/2]
+    energy += [(v.T @ M @ v)/2 + (u.T @ A @ u)/2]
+    
+
     plot_and_save(u, t, PLOT_PATH + f"/frames/frame{k + 1}.png")
+
+plt.plot(np.arange(0, T + STEP, STEP), kinetic, "r", label="kinetic")
+plt.plot(np.arange(0, T + STEP, STEP), potential, "b", label="potential")
+plt.plot(np.arange(0, T + STEP, STEP), energy, "k", label="total")
+plt.title("Energy")
+plt.legend()
+plt.tight_layout()
+plt.savefig(PLOT_PATH + "/energy.png")
+plt.close()
 
 print("Done")
 gif = input("Generate GIF? (YES or NO)")
